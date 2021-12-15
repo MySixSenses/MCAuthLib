@@ -147,9 +147,10 @@ public class MsaAuthenticationService extends AuthenticationService {
                 out.write(bytes);
             }
 
-            if (connection.getResponseCode() != 200 || !connection.getURL().toString().equals(urlPost)) {
+            if (connection.getResponseCode() != 200 || connection.getURL().toString().equals(urlPost)) {
                 // TODO: Get and parse the error from the site
                 // See https://github.com/XboxReplay/xboxlive-auth/blob/master/src/core/live/index.ts#L115
+                System.out.println(inputStreamToString(connection.getResponseCode() == 200 ? connection.getInputStream() : connection.getErrorStream())
                 throw new InvalidCredentialsException("Invalid username and/or password");
             }
 
